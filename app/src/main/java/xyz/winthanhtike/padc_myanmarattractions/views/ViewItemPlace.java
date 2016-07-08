@@ -1,16 +1,12 @@
 package xyz.winthanhtike.padc_myanmarattractions.views;
 
 import android.content.Context;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import xyz.winthanhtike.padc_myanmarattractions.MyanmarAttractionsApp;
 import xyz.winthanhtike.padc_myanmarattractions.R;
 import xyz.winthanhtike.padc_myanmarattractions.data.vos.MMAttractionVO;
 
@@ -45,7 +41,7 @@ public class ViewItemPlace extends CardView {
 
         tvPlaceTitle.setText(mmAttractionVO.getPlaceTitle());
         Glide.with(ivPlaceImage.getContext())
-                .load(mmAttractionVO.getPlaceImages())
+                .load(MyanmarAttractionsApp.getContext().getResources().getIdentifier(mmAttractionVO.getPlaceImages().toString(),"drawble-nodpi","xyz.winthanhtike.padc_myanmarattraction"))
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(ivPlaceImage);
