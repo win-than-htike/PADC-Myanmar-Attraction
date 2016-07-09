@@ -1,6 +1,7 @@
 package xyz.winthanhtike.padc_myanmarattractions.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
+
 import xyz.winthanhtike.padc_myanmarattractions.MyanmarAttractionsApp;
 import xyz.winthanhtike.padc_myanmarattractions.R;
 import xyz.winthanhtike.padc_myanmarattractions.data.models.MMAttractionModel;
@@ -22,6 +25,7 @@ import xyz.winthanhtike.padc_myanmarattractions.data.vos.MMAttractionVO;
 public class PlaceDetailActivity extends AppCompatActivity {
 
     private static final String IE_PLACE_TITLE = "IE_PLACE_TITLE";
+    public static final String IMAGE_URL = "http://www.aungpyaephyo.xyz/myanmar_attractions/";
 
     private ImageView ivPlacePhoto;
     private TextView tvPlaceDesc;
@@ -54,7 +58,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
         String placeTitle = getIntent().getStringExtra(IE_PLACE_TITLE);
 
-        MMAttractionVO mmAttractionVO = MMAttractionModel.getInstance().getPlaceByTitle(placeTitle);
+        final MMAttractionVO mmAttractionVO = MMAttractionModel.getInstance().getPlaceByTitle(placeTitle);
 
         if (mmAttractionVO == null){
             throw new RuntimeException("Can't find Place obj with the title : " + placeTitle);
@@ -63,8 +67,8 @@ public class PlaceDetailActivity extends AppCompatActivity {
             tvPlaceDesc.setText(mmAttractionVO.getPlaceDesc());
 
             Glide.with(ivPlacePhoto.getContext())
-                    .load(R.drawable.inlelake_01)
-                    .placeholder(R.mipmap.ic_launcher)
+                    .load(IMAGE_URL+ mmAttractionVO.getPlaceImages()[0])
+                    .placeholder(R.drawable.wallp)
                     .error(R.mipmap.ic_launcher)
                     .into(ivPlacePhoto);
         }
@@ -73,8 +77,11 @@ public class PlaceDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               //share image
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, IMAGE_URL+mmAttractionVO.getPlaceImages()[0]);
+                startActivity(Intent.createChooser(shareIntent, "Share link using"));
             }
         });
     }

@@ -1,17 +1,12 @@
 package xyz.winthanhtike.padc_myanmarattractions.views;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import xyz.winthanhtike.padc_myanmarattractions.MyanmarAttractionsApp;
 import xyz.winthanhtike.padc_myanmarattractions.R;
+import xyz.winthanhtike.padc_myanmarattractions.activities.PlaceDetailActivity;
 import xyz.winthanhtike.padc_myanmarattractions.data.vos.MMAttractionVO;
 import xyz.winthanhtike.padc_myanmarattractions.fragments.MainActivityFragment;
 
@@ -42,8 +37,8 @@ public class AttractionViewHolder extends RecyclerView.ViewHolder implements Vie
         this.mmAttractionVO = mmAttractionVO;
         tvPlaceTitle.setText(mmAttractionVO.getPlaceTitle());
         Glide.with(ivPlaceImage.getContext())
-                .load(MyanmarAttractionsApp.getContext().getResources().getIdentifier("bagan_02.jpg","drawble",MyanmarAttractionsApp.getContext().getPackageName()))
-                .placeholder(R.mipmap.ic_launcher)
+                .load(PlaceDetailActivity.IMAGE_URL+mmAttractionVO.getPlaceImages()[0])
+                .placeholder(R.drawable.wallp)
                 .error(R.mipmap.ic_launcher)
                 .into(ivPlaceImage);
     }
